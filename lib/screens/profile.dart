@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -83,26 +84,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ListTile(
                     leading: widget.taxi['taxi_profile'] != null
                         ? ClipOval(
-                            child: SizedBox(
+                            child: CachedNetworkImage(
+                              imageUrl: widget.taxi['taxi_profile'],
+                              fit: BoxFit.cover,
                               width: 56,
                               height: 56,
-                              child: Image.network(
-                                fit: BoxFit.cover,
-                                widget.taxi['taxi_profile'],
-                                semanticLabel: "Profile Image",
-                                loadingBuilder: (context, child, progress) {
-                                  if (progress == null) {
-                                    return child;
-                                  } else {
-                                    return Skeletonizer.zone(
-                                      child: Bone.square(
-                                        size: 56,
-                                        borderRadius: BorderRadius.circular(16),
-                                      ),
-                                    );
-                                  }
-                                },
+                              placeholder: (context, url) => Skeletonizer.zone(
+                                child: Bone.square(
+                                  size: 56,
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
                               ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
                             ),
                           )
                         : const SizedBox(
@@ -382,7 +376,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     slivers: [
                       SliverPadding(
                         padding: const EdgeInsets.only(
-                            top: 24, bottom: 24, left: 16, right: 16),
+                          top: 24,
+                          bottom: 24,
+                          left: 16,
+                          right: 16,
+                        ),
                         sliver: SliverGrid(
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
@@ -415,11 +413,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(8),
-                                                child: Image.network(
-                                                  widget.taxi['taxi_photos']
-                                                      [index],
-                                                  fit: BoxFit.contain,
-                                                  semanticLabel: "Taxi Photos",
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      widget.taxi['taxi_photos']
+                                                          [index],
+                                                  fit: BoxFit.cover,
+                                                  placeholder: (context, url) =>
+                                                      Skeletonizer.zone(
+                                                    child: Bone.square(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                  ),
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      const Icon(Icons.error),
                                                 ),
                                               ),
                                             ),
@@ -430,23 +439,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   },
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
-                                    child: Image.network(
-                                      widget.taxi['taxi_photos'][index],
+                                    child: CachedNetworkImage(
+                                      imageUrl: widget.taxi['taxi_photos']
+                                          [index],
                                       fit: BoxFit.cover,
-                                      semanticLabel: "Taxi Photos",
-                                      loadingBuilder:
-                                          (context, child, progress) {
-                                        if (progress == null) {
-                                          return child;
-                                        } else {
-                                          return Skeletonizer.zone(
-                                            child: Bone.square(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                          );
-                                        }
-                                      },
+                                      placeholder: (context, url) =>
+                                          Skeletonizer.zone(
+                                        child: Bone.square(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
                                     ),
                                   ),
                                 ),
@@ -476,33 +481,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       'reviewer_photo'] !=
                                                   null
                                               ? ClipOval(
-                                                  child: SizedBox(
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: taxi_review[
+                                                        'reviewer_photo'],
+                                                    fit: BoxFit.cover,
                                                     width: 42,
                                                     height: 42,
-                                                    child: Image.network(
-                                                      fit: BoxFit.cover,
-                                                      taxi_review[
-                                                          'reviewer_photo'],
-                                                      semanticLabel:
-                                                          "Profile Image",
-                                                      loadingBuilder: (context,
-                                                          child, progress) {
-                                                        if (progress == null) {
-                                                          return child;
-                                                        } else {
-                                                          return Skeletonizer
-                                                              .zone(
-                                                            child: Bone.square(
-                                                              size: 56,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16),
-                                                            ),
-                                                          );
-                                                        }
-                                                      },
+                                                    placeholder:
+                                                        (context, url) =>
+                                                            Skeletonizer.zone(
+                                                      child: Bone.square(
+                                                        size: 42,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(16),
+                                                      ),
                                                     ),
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        const Icon(Icons.error),
                                                   ),
                                                 )
                                               : const SizedBox(

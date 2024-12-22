@@ -35,5 +35,6 @@
   "change_location": "Konumu Değiştir",
   "change": "Değiştir",
   "view_full_profile": "Profili Görüntüle",
-  "not_yet_rated": "Henüz oy verilmedi"
+  "not_yet_rated": "Henüz oy verilmedi",
+  "check_connection": "Lütfen internet bağlantınızı kontrol ediniz."
 }
