@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -164,28 +165,21 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                           ListTile(
                             leading: taxi['taxi_profile'] != null
                                 ? ClipOval(
-                                    child: SizedBox(
+                                    child: CachedNetworkImage(
+                                      imageUrl: taxi['taxi_profile'],
+                                      fit: BoxFit.cover,
                                       width: 56,
                                       height: 56,
-                                      child: Image.network(
-                                        fit: BoxFit.cover,
-                                        taxi['taxi_profile'],
-                                        semanticLabel: "Profile Image",
-                                        loadingBuilder:
-                                            (context, child, progress) {
-                                          if (progress == null) {
-                                            return child;
-                                          } else {
-                                            return Skeletonizer.zone(
-                                              child: Bone.square(
-                                                size: 56,
-                                                borderRadius:
-                                                    BorderRadius.circular(16),
-                                              ),
-                                            );
-                                          }
-                                        },
+                                      placeholder: (context, url) =>
+                                          Skeletonizer.zone(
+                                        child: Bone.square(
+                                          size: 56,
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                        ),
                                       ),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
                                     ),
                                   )
                                 : const SizedBox(

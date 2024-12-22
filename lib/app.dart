@@ -15,12 +15,15 @@ import 'package:kibtaxi/themes/light.dart';
 import 'package:kibtaxi/widgets/bars/bottom.navigation_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class _MyAppState extends State<MyApp>
     with WidgetsBindingObserver, SingleTickerProviderStateMixin {
   Locale? _locale;
   late Future<dynamic> _position;
   int _currentIndex = 0;
+  bool _connectionStatus = true;
+  late StreamSubscription<List<ConnectivityResult>> _streamSubscription;
 
   AnimationController? _animationController;
   Animation<double>? _animation;
@@ -88,6 +91,28 @@ class _MyAppState extends State<MyApp>
     return position;
   }
 
+  void _checkConnectivity() async {
+    final List<ConnectivityResult> connectivityResult =
+        await (Connectivity().checkConnectivity());
+
+    if (connectivityResult.contains(ConnectivityResult.none)) {
+      setState(() {
+        _connectionStatus = false;
+      });
+    }
+  }
+
+  void _listenConnectivity() {
+    _streamSubscription = Connectivity()
+        .onConnectivityChanged
+        .listen((List<ConnectivityResult> connectivityResult) {
+      setState(() {
+        _connectionStatus =
+            !connectivityResult.contains(ConnectivityResult.none);
+      });
+    });
+  }
+
   void setLocale(Locale locale) {
     setState(() {
       _locale = locale;
@@ -141,13 +166,19 @@ class _MyAppState extends State<MyApp>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+
     _animationController!.dispose();
+    _streamSubscription.cancel();
+
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
+
+    _checkConnectivity();
+    _listenConnectivity();
 
     _loadLocale();
 
@@ -197,6 +228,42 @@ class _MyAppState extends State<MyApp>
         body: FutureBuilder<dynamic>(
           future: _position,
           builder: (context, snapshot) {
+            print("CONNECTIVITY: $_connectionStatus");
+
+            if (!_connectionStatus) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 64,
+                    height: 64,
+                    child: Image.asset(
+                      Theme.of(context).brightness == Brightness.dark
+                          ? 'assets/icons/app.light.png'
+                          : 'assets/icons/app.png',
+                      semanticLabel: "App Logo",
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!
+                              .translate('check_connection'),
+                          textAlign: TextAlign.center,
+                          semanticsLabel: "Internet Connection Error",
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              );
+            }
+
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -473,10 +540,11 @@ class _MyAppState extends State<MyApp>
             }
 
             return const Center(
-                child: Text(
-              "Something went wrong.",
-              semanticsLabel: "Error Message: Something went wrong",
-            ));
+              child: Text(
+                "Something went wrong.",
+                semanticsLabel: "Error Message: Something went wrong",
+              ),
+            );
           },
         ),
       ),

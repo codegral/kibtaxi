@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -220,9 +221,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
-              return Center(
+              return const Center(
                 child: Text(
-                  "Error: ${snapshot.error}",
+                  "Something went wrong.",
                   semanticsLabel: "API Failed Error Message",
                 ),
               ); // Provide error details
@@ -380,32 +381,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                       leading: GestureDetector(
                                         child: taxi['taxi_profile'] != null
                                             ? ClipOval(
-                                                child: SizedBox(
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      taxi['taxi_profile'],
+                                                  fit: BoxFit.cover,
                                                   width: 56,
                                                   height: 56,
-                                                  child: Image.network(
-                                                    fit: BoxFit.cover,
-                                                    taxi['taxi_profile'],
-                                                    semanticLabel:
-                                                        "Profile Image",
-                                                    loadingBuilder: (context,
-                                                        child, progress) {
-                                                      if (progress == null) {
-                                                        return child;
-                                                      } else {
-                                                        return Skeletonizer
-                                                            .zone(
-                                                          child: Bone.square(
-                                                            size: 56,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        16),
-                                                          ),
-                                                        );
-                                                      }
-                                                    },
+                                                  placeholder: (context, url) =>
+                                                      Skeletonizer.zone(
+                                                    child: Bone.square(
+                                                      size: 56,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              16),
+                                                    ),
                                                   ),
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      const Icon(Icons.error),
                                                 ),
                                               )
                                             : const SizedBox(
@@ -816,30 +809,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                     leading: GestureDetector(
                                       child: taxi['taxi_profile'] != null
                                           ? ClipOval(
-                                              child: SizedBox(
+                                              child: CachedNetworkImage(
+                                                imageUrl: taxi['taxi_profile'],
+                                                fit: BoxFit.cover,
                                                 width: 56,
                                                 height: 56,
-                                                child: Image.network(
-                                                  fit: BoxFit.cover,
-                                                  taxi['taxi_profile'],
-                                                  semanticLabel:
-                                                      "Profile Image",
-                                                  loadingBuilder: (context,
-                                                      child, progress) {
-                                                    if (progress == null) {
-                                                      return child;
-                                                    } else {
-                                                      return Skeletonizer.zone(
-                                                        child: Bone.square(
-                                                          size: 56,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(16),
-                                                        ),
-                                                      );
-                                                    }
-                                                  },
+                                                placeholder: (context, url) =>
+                                                    Skeletonizer.zone(
+                                                  child: Bone.square(
+                                                    size: 56,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16),
+                                                  ),
                                                 ),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        const Icon(Icons.error),
                                               ),
                                             )
                                           : const SizedBox(
