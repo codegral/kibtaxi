@@ -137,7 +137,7 @@ class InterstitialAds {
     if (_interstitialAd != null &&
         _isAdReady &&
         _clickCount > 1 &&
-        _clickCount % 2 == 0) {
+        _clickCount % 3 == 0) {
       _onAdClosedCallback = onAdClosed;
       _interstitialAd!.show();
       _interstitialAd = null;
