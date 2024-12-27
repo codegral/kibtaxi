@@ -407,17 +407,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 child: CircleAvatar(),
                                               ),
                                         onTap: () {
-                                          _interstitialAds.showAd(
-                                            onAdClosed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ProfileScreen(taxi: taxi),
-                                                ),
-                                              );
-                                            },
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProfileScreen(taxi: taxi),
+                                            ),
                                           );
+                                          // _interstitialAds.showAd(
+                                          //   onAdClosed: () {
+                                          //     Navigator.push(
+                                          //       context,
+                                          //       MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             ProfileScreen(taxi: taxi),
+                                          //       ),
+                                          //     );
+                                          //   },
+                                          // );
                                         },
                                       ),
                                       title: Text(
@@ -834,17 +841,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                               child: CircleAvatar(),
                                             ),
                                       onTap: () {
-                                        _interstitialAds.showAd(
-                                          onAdClosed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ProfileScreen(taxi: taxi),
-                                              ),
-                                            );
-                                          },
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProfileScreen(taxi: taxi),
+                                          ),
                                         );
+                                        // _interstitialAds.showAd(
+                                        //   onAdClosed: () {
+                                        //     Navigator.push(
+                                        //       context,
+                                        //       MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             ProfileScreen(taxi: taxi),
+                                        //       ),
+                                        //     );
+                                        //   },
+                                        // );
                                       },
                                     ),
                                     title: Text(

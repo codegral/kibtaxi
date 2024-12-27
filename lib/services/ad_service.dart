@@ -72,6 +72,7 @@ class InterstitialAds {
   InterstitialAd? _interstitialAd;
   bool _isAdReady = false;
   Function? _onAdClosedCallback;
+  int _clickCount = 0;
 
   static final InterstitialAds _instance = InterstitialAds._internal();
   factory InterstitialAds() => _instance;
@@ -112,7 +113,6 @@ class InterstitialAds {
             },
             onAdClicked: (ad) {},
           );
-
           debugPrint('$ad loaded.');
         },
         onAdFailedToLoad: (LoadAdError error) {
@@ -125,16 +125,22 @@ class InterstitialAds {
   }
 
   void _scheduleAdLoad() {
-    Future.delayed(const Duration(milliseconds: 60000), () {
+    Future.delayed(const Duration(milliseconds: 120000), () {
       _loadAd();
     });
   }
 
   void showAd({required Function onAdClosed}) {
-    if (_interstitialAd != null && _isAdReady) {
+    _clickCount++;
+    print("Click Count: $_clickCount");
+
+    if (_interstitialAd != null &&
+        _isAdReady &&
+        _clickCount > 1 &&
+        _clickCount % 2 == 0) {
       _onAdClosedCallback = onAdClosed;
       _interstitialAd!.show();
-      _interstitialAd = null; // Reset the ad after showing it
+      _interstitialAd = null;
     } else {
       debugPrint('InterstitialAd is not ready yet or already disposed.');
       onAdClosed();

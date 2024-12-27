@@ -228,8 +228,6 @@ class _MyAppState extends State<MyApp>
         body: FutureBuilder<dynamic>(
           future: _position,
           builder: (context, snapshot) {
-            print("CONNECTIVITY: $_connectionStatus");
-
             if (!_connectionStatus) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
