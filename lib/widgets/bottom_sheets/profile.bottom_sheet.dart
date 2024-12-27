@@ -206,14 +206,20 @@ class ProfileBottomSheet extends StatelessWidget {
             ),
             isThreeLine: true,
             onTap: () {
-              interstitialAds.showAd(onAdClosed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfileScreen(taxi: taxi),
-                  ),
-                );
-              });
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfileScreen(taxi: taxi),
+                ),
+              );
+              // interstitialAds.showAd(onAdClosed: () {
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) => ProfileScreen(taxi: taxi),
+              //     ),
+              //   );
+              // });
             },
           ),
           Padding(
@@ -309,16 +315,23 @@ class ProfileBottomSheet extends StatelessWidget {
                                 ),
                               ),
                               onTap: () {
-                                interstitialAds.showAd(onAdClosed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ProfileScreen(
-                                        taxi: taxi,
-                                      ),
-                                    ),
-                                  );
-                                });
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ProfileScreen(taxi: taxi),
+                                  ),
+                                );
+                                // interstitialAds.showAd(onAdClosed: () {
+                                //   Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (context) => ProfileScreen(
+                                //         taxi: taxi,
+                                //       ),
+                                //     ),
+                                //   );
+                                // });
                               },
                             );
                           }).toList(),
@@ -335,17 +348,24 @@ class ProfileBottomSheet extends StatelessWidget {
 
                         return InkWell(
                           onTap: () {
-                            interstitialAds.showAd(
-                              onAdClosed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ProfileScreen(taxi: taxi),
-                                  ),
-                                );
-                              },
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ProfileScreen(taxi: taxi),
+                              ),
                             );
+
+                            // interstitialAds.showAd(
+                            //   onAdClosed: () {
+                            //     Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) =>
+                            //             ProfileScreen(taxi: taxi),
+                            //       ),
+                            //     );
+                            //   },
+                            // );
                           },
                           child: ListTile(
                             leading: taxi_review['reviewer_photo'] != null
@@ -448,16 +468,22 @@ class ProfileBottomSheet extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      interstitialAds.showAd(onAdClosed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProfileScreen(
-                              taxi: taxi,
-                            ),
-                          ),
-                        );
-                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfileScreen(taxi: taxi),
+                        ),
+                      );
+                      // interstitialAds.showAd(onAdClosed: () {
+                      //   Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => ProfileScreen(
+                      //         taxi: taxi,
+                      //       ),
+                      //     ),
+                      //   );
+                      // });
                     },
                     style: ButtonStyle(
                       backgroundColor:
