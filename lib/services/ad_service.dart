@@ -125,7 +125,7 @@ class InterstitialAds {
   }
 
   void _scheduleAdLoad() {
-    Future.delayed(const Duration(milliseconds: 120000), () {
+    Future.delayed(const Duration(milliseconds: 10000), () {
       _loadAd();
     });
   }
