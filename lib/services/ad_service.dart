@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -137,7 +136,7 @@ class InterstitialAds {
     if (_interstitialAd != null &&
         _isAdReady &&
         _clickCount > 1 &&
-        _clickCount % 3 == 0) {
+        _clickCount % 2 == 0) {
       _onAdClosedCallback = onAdClosed;
       _interstitialAd!.show();
       _interstitialAd = null;
